@@ -1,0 +1,129 @@
+@import "../../styles/vars.scss";
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: white;
+  padding: 12px;
+  padding-left: 16px;
+  border-radius: 8px;
+  color: black;
+  cursor: pointer;
+  background-color: $white;
+  outline: 1px solid $gray;
+  position: relative;
+
+  &Title {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: $gray;
+  }
+}
+
+.title {
+  font-weight: bold;
+  color: $black;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.list {
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 6px 0;
+  background-color: $white;
+  outline: 1px solid $gray;
+  max-height: 400px;
+  overflow: scroll;
+  position: absolute;
+  top: 0;
+  left: 110%;
+
+  width: 100%;
+  z-index: 20;
+
+  &Item {
+    font-weight: 400;
+    font-size: 16px;
+    padding: 6px 16px;
+    line-height: 24px;
+    color: $black;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  opacity: 1;
+  transition: all 0.2s linear;
+
+  @include vp-767 {
+    top: 120%;
+    left: 0;
+  }
+}
+.closed {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s linear;
+  position: absolute;
+  top: 0;
+  left: 110%;
+  width: 100%;
+
+  @include vp-767 {
+    top: 120%;
+    left: 0;
+  }
+}
+
+.chosenList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chosenItem {
+  padding: 4px 11px;
+  background-color: $light-gray;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &Text {
+    font-weight: 400;
+    font-size: 16px;
+    color: black;
+  }
+
+  &:hover {
+    background-color: rgb(233, 233, 233);
+  }
+
+  &::after {
+    content: '';
+    height: 12px;
+    width: 12px;
+    background-color: transparent;
+    background-image: url("../../../public/img/close-icon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+  } 
+}
+
+.arrow {
+  transition: all 0.3s linear;
+
+  &Up {
+    transform: rotate(-180deg);
+    transition: all 0.3s linear;
+  }
+}

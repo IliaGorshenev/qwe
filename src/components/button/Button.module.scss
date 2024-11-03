@@ -1,0 +1,46 @@
+@import "../../styles/vars.scss";
+
+.button {
+  padding: 9px 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.text {
+  font-family: 'NT Somic', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400px;
+}
+
+.primary {
+  background-color: $main-blue;
+  border-radius: 12px;
+
+  & .text {
+    color: $white
+  }
+
+  transition: opacity 0.2s linear;
+
+  &:hover {
+    opacity: 0.8;
+    transition: all 0.2s linear;
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  border-radius: 12px;
+
+  & .text {
+    color: $main-blue;
+  }
+
+  &:hover {
+    & .text {
+      color: $black;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@import "../../styles/vars.scss";
+.header {
+  z-index: 10;
+  display: flex;
+}
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 19px 6%;
+  max-width: 1480px;
+  width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  margin: 0 auto;
+  z-index: 100;
+}
+
+.nav {
+  & ul {
+    display: flex;
+    list-style-type: none;
+    gap: 32px;
+  }
+
+  @include vp-767 {
+    display: none;
+  }
+}
+
+.logo {
+  font-family: "NT Somic", sans-serif;
+  font-weight: 800;
+  font-size: 36px;
+  color: #1a3fae;
+}
+.navLink {
+  &:hover {
+    cursor: pointer;
+    color: $main-blue;
+  }
+}
+
+.authorisation {
+  display: flex;
+  gap: 12px;
+}

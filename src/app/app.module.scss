@@ -1,0 +1,228 @@
+@import "../styles/vars.scss";
+
+body {
+  min-height: 100vh;
+}
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  min-width: 100vw;
+  margin: 0 auto;
+  overflow-x: hidden;
+  background-color: $light-gray;
+  justify-content: space-between;
+}
+
+.adaptive {
+  max-width: 100%;
+  min-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  min-height: 100vh;
+}
+
+.wrapper {
+  display: grid;
+  width: 100%;
+  max-width: 1408px;
+  margin: 0 auto;
+  grid-template-columns: 31% 65%;
+  gap: 40px;
+  height: 100px;
+
+  @include vp-767 {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.propagation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.first {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  @include vp-767 {
+    align-self: auto;
+  }
+  gap: 20px;
+  background-color: white;
+  padding: 24px;
+  border-radius: 20px;
+}
+
+.second {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  gap: 20px;
+  padding-bottom: 20px;
+  &Post {
+    padding: 28px;
+    background-color: white;
+    width: auto;
+    height: auto;
+    display: flex;
+    gap: 24px;
+    border-radius: 20px;
+  }
+
+  &List {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  &Title {
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 112%;
+  }
+
+  &Place {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: &gray;
+  }
+
+  &Skills {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  &Skill {
+    padding: 4px 11px;
+    background-color: $light-gray;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &Text {
+      font-weight: 400;
+      font-size: 16px;
+      color: black;
+    }
+  }
+
+  &Photo {
+    border-radius: 50%;
+  }
+}
+.main {
+  min-height: 100%;
+  z-index: 1;
+  flex-grow: 10;
+  position: relative;
+}
+
+.promoContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 56px;
+  position: absolute;
+  width: 70%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.promoButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-transform: capitalize;
+  text-align: center;
+  padding: 20px 32px;
+  background-color: black;
+  color: #fff;
+  border-radius: 12px;
+  transition: background-color 0.2s ease-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #9eb6ff;
+    transition: background-color 0.4s ease-out;
+  }
+  & > span {
+    font-weight: 400;
+    font-size: 22px;
+    color: #fff;
+  }
+}
+.promoTitle {
+  font-weight: 500;
+  font-size: 90px;
+
+  @media (max-width: 820px) {
+    font-size: 68px;
+  }
+}
+.promoBlock {
+  width: 100%;
+  height: calc(100vh + 200px);
+  overflow: hidden;
+  position: absolute;
+  top: -200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gradientElement {
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 110, 196, 0.7),
+    rgba(120, 115, 245, 0.7)
+  );
+  border-radius: 50%;
+  filter: blur(100px); /* Apply blur */
+  opacity: 0.6; /* Optional: Adjust opacity for better effect */
+  transition: transform 0.3s;
+}
+
+.cloud {
+  position: absolute;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: #9eb6ff;
+  border-radius: 50px;
+}
+
+.pinkGradient {
+  background: radial-gradient(
+    circle,
+    rgba(255, 110, 196, 0.7),
+    rgba(255, 182, 193, 0.7)
+  );
+}
+.blueGradient {
+  background: radial-gradient(
+    circle,
+    rgba(120, 115, 245, 0.7),
+    rgba(70, 130, 180, 0.7)
+  );
+}

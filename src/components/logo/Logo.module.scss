@@ -1,0 +1,27 @@
+@import "src/styles/vars.scss";
+
+.logo {
+  display: flex;
+  transition: opacity 0.2s linear;
+
+  &:hover {
+    opacity: 0.8;
+    transition: all 0.2s linear;
+  }
+
+  &Link {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  &TextContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &Text {
+    fill: $main-blue;
+  }
+}

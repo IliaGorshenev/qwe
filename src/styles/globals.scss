@@ -1,0 +1,195 @@
+@import 'src/styles/vars';
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #18232e;
+  border: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background: $white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $gray;
+  border-radius: 5px;
+  border: 2px solid $white;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  font-family: 'NT Somic';
+  font-weight: 500;
+  transition: all 0.3s;
+  color: $black;
+}
+
+.custom-slide {
+  width: fit-content !important;
+  height: auto !important;
+  box-sizing: border-box;
+}
+
+.swiper-pagination-horizontal {
+  bottom: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.show {
+  animation: show 0.3s ease-in-out;
+}
+
+.hide {
+  animation: hide 0.3s ease-in-out;
+}
+
+
+@font-face {
+  font-family: 'NT Somic';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../public/fonts/NTSomic-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NT Somic';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../public/fonts/NTSomic-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NT Somic';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../public/fonts/NTSomic-Semibold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NT Somic';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../public/fonts/NTSomic-Bold.woff2') format('woff2');
+}
+

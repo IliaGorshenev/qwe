@@ -1,0 +1,67 @@
+@import "../../styles/vars.scss";
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.field {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+
+  &Text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: $black;
+  }
+}
+
+.itemWrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+  color: #919191;
+}
+
+.title {
+  font-weight: bold;
+  color: $black;
+  font-size: 20px;
+  line-height: 28px;
+}
+
+.checkbox {
+  border: 1px solid $gray;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  display: none;
+  &:checked + div > .checkbox > .icon{
+    display: block;
+  }
+}
+
+.icon {
+  display: none;
+}
+
+  // &::after {
+  //   content: '';
+  //   height: 12px;
+  //   width: 12px;
+  //   background-color: transparent;
+  //   background-image: url("../../../public/img/close-icon.svg");
+  //   background-repeat: no-repeat;
+  //   background-position: center;
+  // } 
