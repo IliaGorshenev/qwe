@@ -120,9 +120,9 @@ function App() {
           const directionX = Math.random() < 0.5 ? -1 : 1;
           const directionY = Math.random() < 0.5 ? -1 : 1;
           const x =
-            ((window.innerWidth - event.pageX * speed * 1) / 200) * directionX;
+            ((window.innerWidth - event.pageX * 1) / 200) * directionX;
           const y =
-            ((window.innerHeight - event.pageY * speed * 1) / 200) * directionY;
+            ((window.innerHeight - event.pageY * 1) / 200) * directionY;
           el.style.transform = `translateX(${x}px) translateY(${y}px)`;
           el.style.transition = `transform 0.3s ease`;
         });
