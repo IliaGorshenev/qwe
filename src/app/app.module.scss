@@ -226,3 +226,54 @@ body {
     rgba(70, 130, 180, 0.7)
   );
 }
+
+
+
+.secondBio {
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.secondStats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  span {
+    margin-right: 10px;
+  }
+}
+
+.secondSkills {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.secondSkill {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 0.8em;
+}
+
+.secondContributions {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.secondContacts {
+  display: flex;
+  flex-direction: column;
+
+  a {
+    margin-bottom: 5px;
+    color: #0366d6;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
