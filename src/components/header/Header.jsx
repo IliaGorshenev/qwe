@@ -1,14 +1,14 @@
-import Hamburger from "hamburger-react";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useWindowWidth } from "../../hooks/useWindowWidth";
-import Button, { buttonVariants } from "../button/Button";
-import classes from "./header.module.scss";
+import Hamburger from 'hamburger-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useWindowWidth } from '../../hooks/useWindowWidth';
+import Button, { buttonVariants } from '../button/Button';
+import classes from './header.module.scss';
 
 const links = [
-  { name: "О нас", href: "" },
-  { name: "База кандидатов", href: "/candidates" },
-  { name: "Тарифы", href: "" },
+  { name: 'О нас', href: '' },
+  { name: 'База кандидатов', href: '/candidates' },
+  { name: 'Тарифы', href: '' },
 ];
 
 function Header() {
@@ -18,10 +18,9 @@ function Header() {
 
   return (
     <header className={classes.header}>
-      <div styles={{ overflow: "hidden" }} className={classes.headerContainer}>
+      <div styles={{ overflow: 'hidden' }} className={classes.headerContainer}>
         <Link className={classes.logo} to="/">
-        стартрикс ✨
-
+          стартрикс ✨
         </Link>
         <nav className={classes.nav}>
           <ul>
@@ -33,20 +32,41 @@ function Header() {
                     </Link>
                   </li>
                 ))
-              : "Другие страницы недоступны"}
+              : 'Другие страницы недоступны'}
           </ul>
         </nav>
         <div className={classes.authorisation}>
-          <Button variant={buttonVariants.SECONDARY} text={"Войти"} />
-          <Button variant={buttonVariants.PRIMARY} text={"Регистрация"} />
-          {MOBILE && (
-            <Hamburger
-              className={classes.burgerButton}
-              duration={0.8}
-              toggled={isOpen}
-              toggle={setOpen}
-            ></Hamburger>
+          {!MOBILE && (
+            <>
+              <Button variant={buttonVariants.SECONDARY} text={'Войти'} />
+              <Button variant={buttonVariants.PRIMARY} text={'Регистрация'} />
+            </>
           )}
+          {MOBILE && (
+            <div style={{ zIndex: '10' }}>
+              {' '}
+              <Hamburger className={classes.burgerButton} duration={0.8} toggled={isOpen} toggle={setOpen}></Hamburger>
+            </div>
+          )}
+          <div>
+            {isOpen && (
+              <div className={classes.mobileMenu}>
+                <ul>
+                  <a>Войти</a>
+                  <a>Регистрация</a>
+                  {links.length > 0
+                    ? links.map((link) => (
+                        <li>
+                          <Link className={classes.mobileNavLink} to={link.href}>
+                            {link.name}
+                          </Link>
+                        </li>
+                      ))
+                    : 'Другие страницы недоступны'}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

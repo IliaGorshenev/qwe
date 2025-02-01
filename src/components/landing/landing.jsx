@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from '../../app/app.module.scss';
-
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <>

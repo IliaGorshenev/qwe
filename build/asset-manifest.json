@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.36d0eafe.css",
+    "main.js": "/static/js/main.c8845b5e.js",
+    "static/media/NTSomic-Semibold.woff2": "/static/media/NTSomic-Semibold.723b28b6d19c8ae97286.woff2",
+    "static/media/NTSomic-Medium.woff2": "/static/media/NTSomic-Medium.889f5c343b3b9fccc391.woff2",
+    "static/media/NTSomic-Regular.woff2": "/static/media/NTSomic-Regular.32906f59bb59fa62059f.woff2",
+    "static/media/NTSomic-Bold.woff2": "/static/media/NTSomic-Bold.490cf54f67cbc65c07c0.woff2",
+    "index.html": "/index.html",
+    "static/media/close-icon.svg": "/static/media/close-icon.bdb8771f6753083eeefd.svg",
+    "main.36d0eafe.css.map": "/static/css/main.36d0eafe.css.map",
+    "main.c8845b5e.js.map": "/static/js/main.c8845b5e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.36d0eafe.css",
+    "static/js/main.c8845b5e.js"
+  ]
+}
