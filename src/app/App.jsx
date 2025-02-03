@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate} from 'react-router-dom';
 import { PostService } from '../api/api.js';
+import AuthorisationPage from '../components/authorisation';
 import Header from '../components/header/Header.jsx';
 import Landing from '../components/landing/landing.jsx';
+import LoginPage from '../components/login';
 import Select from '../components/select/index.jsx';
+import { AuthProvider, useAuth } from '../context/AuthContext.js';
 import { skills } from '../mocks/data.js';
 import classes from './app.module.scss';
+
 const postService = new PostService();
 
 function App() {
@@ -156,7 +160,7 @@ function App() {
     setIsLoading(true);
     try {
       const queryParams = selectedLanguages.length > 0 ? `?languages=${selectedLanguages.join(',')}` : '';
-      const response = await axios.get(`http://79.174.95.157:3001/users${queryParams}`);
+      const response = await axios.get(`79.174.95.157:3001/users${queryParams}`);
       setCandidates(response.data);
     } catch (error) {
       console.error('Error fetching candidates:', error);
@@ -169,28 +173,36 @@ function App() {
     fetchCandidates();
   }, [selectedLanguages]);
 
+  const ProtectedRoute = ({ children }) => {
+    const { isAuthenticated } = useAuth();
+    const location = useLocation();
+
+    if (!isAuthenticated) {
+      return <Navigate to="/login" state={{ from: location }} replace />;
+    }
+
+    return children;
+  };
+
   return (
-    <div className={classes.root}>
-      <div className={classes.adaptive}>
-        <Header />
-        <main className={classes.main}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <Landing />
-                </>
-              }
-            />
-            <Route
-              path="/candidates"
-              element={
-                <>
-                  {/* {openId !== null && <div className={classes.propagation} onClick={() => setId(null)}></div>} */}
-                  <div className={classes.wrapper}>
-                    <div className={classes.first}>
-                      {/* <Select
+    <AuthProvider>
+      <div className={classes.root}>
+        <div className={classes.adaptive}>
+          <Header />
+          <main className={classes.main}>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<AuthorisationPage />} />
+              <Route
+                path="/candidates"
+                element={
+                  <ProtectedRoute>
+                    <>
+                      {/* {openId !== null && <div className={classes.propagation} onClick={() => setId(null)}></div>} */}
+                      <div style={{padding: '10px'}} className={classes.wrapper}>
+                        <div className={classes.first}>
+                          {/* <Select
                       mainTitle={'Города'}
                       fieldTitle={'Выбрать город'}
                       items={cities}
@@ -208,84 +220,86 @@ function App() {
                       setCity={(e) => setJobApi([...e])}
                     />
                     <Checkbox /> */}
-                      <Select
-                        mainTitle={'Навыки'}
-                        fieldTitle={'Выбрать навыки'}
-                        items={skills}
-                        isOpen={openId === 3}
-                        opener={() => (3 === openId ? setId(null) : setId(3))}
-                        setCity={(e) => {
-                          setSkillApi([...e]);
-                          setSelectedLanguages([...e]);
-                        }}
-                      />
-                      {/* <Button onClick={() => pressedMaker()} variant={buttonVariants.PRIMARY} text={"Подобрать кандидатов"}/> */}
-                    </div>
-                    <div className={classes.second}>
-                      {isLoading ? (
-                        <div className={classes.loaderContainer}>
-                          <div className={classes.circleLoader}></div>
+                          <Select
+                            mainTitle={'Навыки'}
+                            fieldTitle={'Выбрать навыки'}
+                            items={skills}
+                            isOpen={openId === 3}
+                            opener={() => (3 === openId ? setId(null) : setId(3))}
+                            setCity={(e) => {
+                              setSkillApi([...e]);
+                              setSelectedLanguages([...e]);
+                            }}
+                          />
+                          {/* <Button onClick={() => pressedMaker()} variant={buttonVariants.PRIMARY} text={"Подобрать кандидатов"}/> */}
                         </div>
-                      ) : (
-                        (() => {
-                          const filteredCandidates = candidates;
-                          if (filteredCandidates.length === 0) {
-                            return <div className={classes.noCandidatesMessage}>Подходящие кандидаты по выбранным параметрам не найдены</div>;
-                          }
-                          return filteredCandidates.map((post) => (
-                            <div className={classes.secondPost} key={post.login}>
-                              <img className={classes.secondPhoto} width="68" height="68" src={post.image_url} alt={post.name} />
-                              <div className={classes.secondList}>
-                                <p className={classes.secondTitle}>{post.name}</p>
-                                <div className={classes.secondPlace}>
-                                  {post.login} • {new Date(post.created_at).getFullYear()}
-                                </div>
-                                <div className={classes.secondBio}>{post.bio}</div>
-                                <div className={classes.secondStats}>
-                                  <span>Followers: {post.followers}</span>
-                                  <span>Following: {post.following}</span>
-                                  <span>Repos: {post.public_repos}</span>
-                                  <span>Stars: {post.stars}</span>
-                                </div>
-                                <div className={classes.secondSkills}>
-                                  {Object.entries(post.languages).map(([lang, value]) => (
-                                    <span key={lang} className={classes.secondSkill}>
-                                      {lang}: {value}
-                                    </span>
-                                  ))}
-                                </div>
-                                <div className={classes.secondContributions}>{post.contributions}</div>
-                                <div className={classes.secondContacts}>
-                                  {post.email !== 'No public email' && (
-                                    <a href={`mailto:${post.email}`} target="_blank" rel="noreferrer">
-                                      Email: {post.email}
-                                    </a>
-                                  )}
-                                  {post.website && (
-                                    <a href={post.website} target="_blank" rel="noreferrer">
-                                      Website
-                                    </a>
-                                  )}
-                                  {post.linkedin_url && (
-                                    <a href={post.linkedin_url} target="_blank" rel="noreferrer">
-                                      LinkedIn
-                                    </a>
-                                  )}
-                                </div>
-                              </div>
+                        <div className={classes.second}>
+                          {isLoading ? (
+                            <div className={classes.loaderContainer}>
+                              <div className={classes.circleLoader}></div>
                             </div>
-                          ));
-                        })()
-                      )}
-                    </div>
-                  </div>
-                </>
-              }
-            />
-          </Routes>
-        </main>
+                          ) : (
+                            (() => {
+                              const filteredCandidates = candidates;
+                              if (filteredCandidates.length === 0) {
+                                return <div className={classes.noCandidatesMessage}>Подходящие кандидаты по выбранным параметрам не найдены</div>;
+                              }
+                              return filteredCandidates.map((post) => (
+                                <div className={classes.secondPost} key={post.login}>
+                                  <img className={classes.secondPhoto} width="68" height="68" src={post.image_url} alt={post.name} />
+                                  <div className={classes.secondList}>
+                                    <p className={classes.secondTitle}>{post.name}</p>
+                                    <div className={classes.secondPlace}>
+                                      {post.login} • {new Date(post.created_at).getFullYear()}
+                                    </div>
+                                    <div className={classes.secondBio}>{post.bio}</div>
+                                    <div className={classes.secondStats}>
+                                      <span>Followers: {post.followers}</span>
+                                      <span>Following: {post.following}</span>
+                                      <span>Repos: {post.public_repos}</span>
+                                      <span>Stars: {post.stars}</span>
+                                    </div>
+                                    <div className={classes.secondSkills}>
+                                      {Object.entries(post.languages).map(([lang, value]) => (
+                                        <span key={lang} className={classes.secondSkill}>
+                                          {lang}: {value}
+                                        </span>
+                                      ))}
+                                    </div>
+                                    <div className={classes.secondContributions}>{post.contributions}</div>
+                                    <div className={classes.secondContacts}>
+                                      {post.email !== 'No public email' && (
+                                        <a href={`mailto:${post.email}`} target="_blank" rel="noreferrer">
+                                          Email: {post.email}
+                                        </a>
+                                      )}
+                                      {post.website && (
+                                        <a href={post.website} target="_blank" rel="noreferrer">
+                                          Website
+                                        </a>
+                                      )}
+                                      {post.linkedin_url && (
+                                        <a href={post.linkedin_url} target="_blank" rel="noreferrer">
+                                          LinkedIn
+                                        </a>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              ));
+                            })()
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </main>
+        </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 }
 

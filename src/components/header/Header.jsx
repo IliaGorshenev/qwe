@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
 import Button, { buttonVariants } from '../button/Button';
 import classes from './header.module.scss';
+import { useAuth } from '../../context/AuthContext'; // Add this import
 
 const links = [
   { name: 'О нас', href: '' },
@@ -15,6 +16,13 @@ function Header() {
   const [isOpen, setOpen] = useState(false);
   const width = useWindowWidth();
   const MOBILE = width < 767;
+  const { isAuthenticated, logout } = useAuth(); // Add this line
+
+  const handleSignOut = () => {
+    logout();
+    // You might want to redirect the user after logout
+    // For example: navigate('/');
+  };
 
   return (
     <header className={classes.header}>
@@ -26,7 +34,7 @@ function Header() {
           <ul>
             {links.length > 0
               ? links.map((link) => (
-                  <li>
+                  <li key={link.name}>
                     <Link className={classes.navLink} to={link.href}>
                       {link.name}
                     </Link>
@@ -38,8 +46,18 @@ function Header() {
         <div className={classes.authorisation}>
           {!MOBILE && (
             <>
-              <Button variant={buttonVariants.SECONDARY} text={'Войти'} />
-              <Button variant={buttonVariants.PRIMARY} text={'Регистрация'} />
+              {isAuthenticated ? (
+                <Button variant={buttonVariants.SECONDARY} text={'Выйти'} onClick={handleSignOut} />
+              ) : (
+                <>
+                  <Link to="/login">
+                    <Button variant={buttonVariants.SECONDARY} text={'Войти'} />
+                  </Link>
+                  <Link to="/register">
+                    <Button variant={buttonVariants.PRIMARY} text={'Регистрация'} />
+                  </Link>
+                </>
+              )}
             </>
           )}
           {MOBILE && (
@@ -52,11 +70,23 @@ function Header() {
             {isOpen && (
               <div className={classes.mobileMenu}>
                 <ul>
-                  <a>Войти</a>
-                  <a>Регистрация</a>
+                  {isAuthenticated ? (
+                    <li>
+                      <Link to="/" onClick={handleSignOut}>Выйти</Link>
+                    </li>
+                  ) : (
+                    <>
+                      <li>
+                        <Link to="/login">Войти</Link>
+                      </li>
+                      <li>
+                        <Link to="/register">Регистрация</Link>
+                      </li>
+                    </>
+                  )}
                   {links.length > 0
                     ? links.map((link) => (
-                        <li>
+                        <li key={link.name}>
                           <Link className={classes.mobileNavLink} to={link.href}>
                             {link.name}
                           </Link>

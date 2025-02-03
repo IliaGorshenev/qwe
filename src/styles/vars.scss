@@ -16,6 +16,10 @@ $black: #18232e;
 $light-gray: #f6f6f9;
 $light-red: #fff7f7;
 $main-blue: #1a3fae;
+$background-color: #F6F6F9;
+$border-color: #d8d8d8;
+$primary-color: $main-blue;
+$error-color: $primary;
 
 @mixin vp-1919 {
 @media (max-width: ($vp-1920 - 1px)) {
