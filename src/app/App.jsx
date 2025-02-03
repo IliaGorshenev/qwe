@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, Navigate} from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { PostService } from '../api/api.js';
 import AuthorisationPage from '../components/authorisation';
 import Header from '../components/header/Header.jsx';
@@ -12,6 +12,17 @@ import { skills } from '../mocks/data.js';
 import classes from './app.module.scss';
 
 const postService = new PostService();
+
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return children;
+};
 
 function App() {
   const [candidates, setCandidates] = useState([]);
@@ -160,7 +171,7 @@ function App() {
     setIsLoading(true);
     try {
       const queryParams = selectedLanguages.length > 0 ? `?languages=${selectedLanguages.join(',')}` : '';
-      const response = await axios.get(`79.174.95.157:3001/users${queryParams}`);
+      const response = await axios.get(`http://79.174.95.157:3001/users${queryParams}`);
       setCandidates(response.data);
     } catch (error) {
       console.error('Error fetching candidates:', error);
@@ -172,17 +183,6 @@ function App() {
   useEffect(() => {
     fetchCandidates();
   }, [selectedLanguages]);
-
-  const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth();
-    const location = useLocation();
-
-    if (!isAuthenticated) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
-    }
-
-    return children;
-  };
 
   return (
     <AuthProvider>
