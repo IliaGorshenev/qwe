@@ -7,7 +7,6 @@ import Landing from '../components/landing/landing.jsx';
 import Select from '../components/select/index.jsx';
 import { skills } from '../mocks/data.js';
 import classes from './app.module.scss';
-import { CANDIDATES } from './const.js';
 const postService = new PostService();
 
 function App() {
@@ -19,6 +18,7 @@ function App() {
   const [pageCount, setPageCount] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [openId, setId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // const checkCityApi =
   //   cityApi &&
@@ -152,6 +152,22 @@ function App() {
 
   useGradientMovement();
 
+  const fetchCandidates = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get('http://79.174.95.157:3001/users');
+      setCandidates(response.data);
+    } catch (error) {
+      console.error('Error fetching candidates:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCandidates();
+  }, []);
+
   return (
     <div className={classes.root}>
       <div className={classes.adaptive}>
@@ -205,8 +221,10 @@ function App() {
                       {/* <Button onClick={() => pressedMaker()} variant={buttonVariants.PRIMARY} text={"Подобрать кандидатов"}/> */}
                     </div>
                     <div className={classes.second}>
-                      {filterCandidatesByLanguages(CANDIDATES, selectedLanguages).map((post) => {
-                        return (
+                      {isLoading ? (
+                        <div className={classes.loader}>Loading...</div>
+                      ) : (
+                        filterCandidatesByLanguages(candidates, selectedLanguages).map((post) => (
                           <div className={classes.secondPost} key={post.login}>
                             <img className={classes.secondPhoto} width="68" height="68" src={post.image_url} alt={post.name} />
                             <div className={classes.secondList}>
@@ -248,8 +266,8 @@ function App() {
                               </div>
                             </div>
                           </div>
-                        );
-                      })}
+                        ))
+                      )}
                     </div>
                   </div>
                 </>
