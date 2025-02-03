@@ -1,4 +1,4 @@
-@import "../styles/vars.scss";
+@import '../styles/vars.scss';
 
 body {
   min-height: 100vh;
@@ -206,11 +206,7 @@ body {
   position: absolute;
   width: 40%;
   height: 40%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 110, 196, 0.7),
-    rgba(120, 115, 245, 0.7)
-  );
+  background: radial-gradient(circle, rgba(255, 110, 196, 0.7), rgba(120, 115, 245, 0.7));
   border-radius: 50%;
   filter: blur(100px); /* Apply blur */
   opacity: 0.6; /* Optional: Adjust opacity for better effect */
@@ -230,21 +226,11 @@ body {
 }
 
 .pinkGradient {
-  background: radial-gradient(
-    circle,
-    rgba(255, 110, 196, 0.7),
-    rgba(255, 182, 193, 0.7)
-  );
+  background: radial-gradient(circle, rgba(255, 110, 196, 0.7), rgba(255, 182, 193, 0.7));
 }
 .blueGradient {
-  background: radial-gradient(
-    circle,
-    rgba(120, 115, 245, 0.7),
-    rgba(70, 130, 180, 0.7)
-  );
+  background: radial-gradient(circle, rgba(120, 115, 245, 0.7), rgba(70, 130, 180, 0.7));
 }
-
-
 
 .secondBio {
   margin-bottom: 10px;
@@ -260,8 +246,6 @@ body {
     margin-right: 10px;
     margin-bottom: 6px;
   }
-
-
 }
 
 .secondSkills {
@@ -296,4 +280,24 @@ body {
       text-decoration: underline;
     }
   }
+}
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.circleLoader {
+  width: 70px;
+  height: 70px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

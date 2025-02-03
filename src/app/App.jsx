@@ -151,11 +151,14 @@ function App() {
   };
 
   useGradientMovement();
-
+// http://http://localhost:3001/users
   const fetchCandidates = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get('http://79.174.95.157:3001/users');
+      const queryParams = selectedLanguages.length > 0 
+        ? `?languages=${selectedLanguages.join(',')}`
+        : '';
+      const response = await axios.get(`http://79.174.95.157:3001/users${queryParams}`);
       setCandidates(response.data);
     } catch (error) {
       console.error('Error fetching candidates:', error);
@@ -166,7 +169,7 @@ function App() {
 
   useEffect(() => {
     fetchCandidates();
-  }, []);
+  }, [selectedLanguages]);
 
   return (
     <div className={classes.root}>
@@ -222,7 +225,9 @@ function App() {
                     </div>
                     <div className={classes.second}>
                       {isLoading ? (
-                        <div className={classes.loader}>Loading...</div>
+                        <div className={classes.loaderContainer}>
+                          <div className={classes.circleLoader}></div>
+                        </div>
                       ) : (
                         filterCandidatesByLanguages(candidates, selectedLanguages).map((post) => (
                           <div className={classes.secondPost} key={post.login}>
