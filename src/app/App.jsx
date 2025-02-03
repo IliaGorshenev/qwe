@@ -151,13 +151,11 @@ function App() {
   };
 
   useGradientMovement();
-// http://http://localhost:3001/users
+  // http://http://localhost:3001/users
   const fetchCandidates = async () => {
     setIsLoading(true);
     try {
-      const queryParams = selectedLanguages.length > 0 
-        ? `?languages=${selectedLanguages.join(',')}`
-        : '';
+      const queryParams = selectedLanguages.length > 0 ? `?languages=${selectedLanguages.join(',')}` : '';
       const response = await axios.get(`http://79.174.95.157:3001/users${queryParams}`);
       setCandidates(response.data);
     } catch (error) {
@@ -229,49 +227,55 @@ function App() {
                           <div className={classes.circleLoader}></div>
                         </div>
                       ) : (
-                        filterCandidatesByLanguages(candidates, selectedLanguages).map((post) => (
-                          <div className={classes.secondPost} key={post.login}>
-                            <img className={classes.secondPhoto} width="68" height="68" src={post.image_url} alt={post.name} />
-                            <div className={classes.secondList}>
-                              <p className={classes.secondTitle}>{post.name}</p>
-                              <div className={classes.secondPlace}>
-                                {post.login} • {new Date(post.created_at).getFullYear()}
-                              </div>
-                              <div className={classes.secondBio}>{post.bio}</div>
-                              <div className={classes.secondStats}>
-                                <span>Followers: {post.followers}</span>
-                                <span>Following: {post.following}</span>
-                                <span>Repos: {post.public_repos}</span>
-                                <span>Stars: {post.stars}</span>
-                              </div>
-                              <div className={classes.secondSkills}>
-                                {Object.entries(post.languages).map(([lang, value]) => (
-                                  <span key={lang} className={classes.secondSkill}>
-                                    {lang}: {value}
-                                  </span>
-                                ))}
-                              </div>
-                              <div className={classes.secondContributions}>{post.contributions}</div>
-                              <div className={classes.secondContacts}>
-                                {post.email !== 'No public email' && (
-                                  <a href={`mailto:${post.email}`} target="_blank" rel="noreferrer">
-                                    Email: {post.email}
-                                  </a>
-                                )}
-                                {post.website && (
-                                  <a href={post.website} target="_blank" rel="noreferrer">
-                                    Website
-                                  </a>
-                                )}
-                                {post.linkedin_url && (
-                                  <a href={post.linkedin_url} target="_blank" rel="noreferrer">
-                                    LinkedIn
-                                  </a>
-                                )}
+                        (() => {
+                          const filteredCandidates = candidates;
+                          if (filteredCandidates.length === 0) {
+                            return <div className={classes.noCandidatesMessage}>Подходящие кандидаты по выбранным параметрам не найдены</div>;
+                          }
+                          return filteredCandidates.map((post) => (
+                            <div className={classes.secondPost} key={post.login}>
+                              <img className={classes.secondPhoto} width="68" height="68" src={post.image_url} alt={post.name} />
+                              <div className={classes.secondList}>
+                                <p className={classes.secondTitle}>{post.name}</p>
+                                <div className={classes.secondPlace}>
+                                  {post.login} • {new Date(post.created_at).getFullYear()}
+                                </div>
+                                <div className={classes.secondBio}>{post.bio}</div>
+                                <div className={classes.secondStats}>
+                                  <span>Followers: {post.followers}</span>
+                                  <span>Following: {post.following}</span>
+                                  <span>Repos: {post.public_repos}</span>
+                                  <span>Stars: {post.stars}</span>
+                                </div>
+                                <div className={classes.secondSkills}>
+                                  {Object.entries(post.languages).map(([lang, value]) => (
+                                    <span key={lang} className={classes.secondSkill}>
+                                      {lang}: {value}
+                                    </span>
+                                  ))}
+                                </div>
+                                <div className={classes.secondContributions}>{post.contributions}</div>
+                                <div className={classes.secondContacts}>
+                                  {post.email !== 'No public email' && (
+                                    <a href={`mailto:${post.email}`} target="_blank" rel="noreferrer">
+                                      Email: {post.email}
+                                    </a>
+                                  )}
+                                  {post.website && (
+                                    <a href={post.website} target="_blank" rel="noreferrer">
+                                      Website
+                                    </a>
+                                  )}
+                                  {post.linkedin_url && (
+                                    <a href={post.linkedin_url} target="_blank" rel="noreferrer">
+                                      LinkedIn
+                                    </a>
+                                  )}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))
+                          ));
+                        })()
                       )}
                     </div>
                   </div>
